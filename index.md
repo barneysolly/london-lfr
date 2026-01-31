@@ -1,8 +1,8 @@
 ---
-title: Live Facial Recognition and Stop & Search in London
+title: Live Facial Recognition Deployments in London
 ---
 
-# Live Facial Recognition and Stop & Search Mapping (London, 2023–2025)
+# Live Facial Recognition Mapping Against Contextual Factors (London, 2023–2025)
 
 This project explores the spatial relationship between Live Facial Recognition (LFR) deployments, stop & search activity, and socio-economic deprivation in London between 2023 and 2025.
 
