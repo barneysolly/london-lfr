@@ -161,7 +161,7 @@ def merge_all_data(stop_search_2025: gpd.GeoDataFrame, stop_search_2023: gpd.Geo
 
     return unified_gdf
 
-def calcualte_change_stop_search(unified_gdf: gpd.geoDataFrame) -> gpd.GeoDataFrame:
+def calcualte_change_stop_search(unified_gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """
     Calculate the difference between Jan-Nov 2023 stop & search statistics and Jan_nov 2025 stop & search statistics
 
@@ -204,17 +204,24 @@ def merge_imd_with_counts(abs_difference_complete_gdf: gpd.GeoDataFrame, imd_df:
 
 if __name__ == "__main__":
 
-    in_path_2025 = Path("../data/processed/lsoa_data_2025.gpkg")
-    in_path_2023 = Path("../data/processed/lsoa_data_2023.gpkg")
+    BASE_DIR = Path(__file__).resolve().parents[1]
 
-    in_path_lfr = Path("../data/processed/lfr_deployments.gpkg")
+    
+    RAW = BASE_DIR / "data/raw"
+    PROCESSED = BASE_DIR / "data/processed"
 
-    in_path_imd = Path("../data/processed/imd_2019.csv")
+   
+    in_path_2025 = PROCESSED / "lsoa_data_2025.gpkg"
+    in_path_2023 = PROCESSED / "lsoa_data_2023.gpkg"
 
-    zip_path = Path("../data/raw/statistical-gis-boundaries-london.zip")
+    in_path_lfr = PROCESSED / "lfr_deployments.gpkg"
+    in_path_imd = PROCESSED / "imd_2019.csv"
+
+    zip_path = RAW / "statistical-gis-boundaries-london.zip"
     shp_inside_zip_path = "statistical-gis-boundaries-london/ESRI/LSOA_2011_London_gen_MHW.shp"
 
-    out_path = Path("../data/processed/combined_counts.gpkg")
+
+    out_path = PROCESSED / "combined_counts.gpkg"
 
 
     geo_search_2025 = load_geo_df(in_path_2025)

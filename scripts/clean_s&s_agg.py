@@ -65,15 +65,16 @@ def convert_to_geo_data(stop_and_search_df: pd.DataFrame) -> gpd.GeoDataFrame:
 
 if __name__ == "__main__":
 
-    folder_path_2025 = Path("../data/raw")
-    folder_path_2023 = Path("../data/raw/stop_search_jan_nov_2023")
+    BASE_DIR = Path(__file__).resolve().parents[1]
 
-    out_path_2025 = Path("../data/processed/lsoa_data_2025.gpkg")
-    out_path_2023 = Path("../data/processed/lsoa_data_2023.gpkg")
+    folder_path_2025 = BASE_DIR / "data/raw"
+    folder_path_2023 = BASE_DIR / "data/raw/stop_search_jan_nov_2023"
 
+    out_path_2025 = BASE_DIR / "data/processed/lsoa_data_2025.gpkg"
+    out_path_2023 = BASE_DIR / "data/processed/lsoa_data_2023.gpkg"
 
     stop_search_2025 = load_stop_search(folder_path_2025, 2025)
-    stop_and_search_2023 = load_stop_search(folder_path_2025, 2023)
+    stop_and_search_2023 = load_stop_search(folder_path_2023, 2023)
 
     geo_search_2025 = convert_to_geo_data(stop_search_2025)
     geo_stop_and_search_2023 = convert_to_geo_data(stop_and_search_2023)

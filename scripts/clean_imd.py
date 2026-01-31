@@ -22,10 +22,12 @@ def load_imd_xlsx(imd_path: Path, sheet: str) -> pd.DataFrame:
     return deprivation_df
 
 if __name__ == "__main__":
-    
-    in_path = Path("'../data/raw/File_1_-_IMD2019_Index_of_Multiple_Deprivation.xlsx'")
-    out_path = Path("../data/processed/imd_2019.csv")
 
+
+    BASE_DIR = Path(__file__).resolve().parents[1]
+
+    in_path = BASE_DIR / "data/raw/File_1_-_IMD2019_Index_of_Multiple_Deprivation.xlsx"
+    out_path = BASE_DIR / "data/processed/imd_2019.csv"
 
     imd_df = load_imd_xlsx(in_path, 'IMD2019')
     imd_df.to_csv(out_path)

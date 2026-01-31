@@ -60,6 +60,8 @@ def load_lfr(pdf_path: Path) -> pd.DataFrame:
     'No action',
     'Faces seen (estimate)']
 
+    records_lfr = pd.DataFrame(all_rows, columns=headers)
+
     records_lfr = records_lfr.dropna(how='any')
 
     records_lfr.reset_index(drop=True, inplace=True)
@@ -153,9 +155,9 @@ def create_geometry(geo_lfr_df: pd.DataFrame) -> gpd.GeoDataFrame:
 
 
 if __name__ == "__main__":
-    in_path = Path("../data/raw/live-facial-recognition---deployment-record-2025-to-date.pdf")
-    out_path = Path("../data/processed/lfr_deployments.gpkg")
 
+    in_path = Path("data/raw/live-facial-recognition---deployment-record-2025-to-date.pdf")
+    out_path = Path("data/processed/lfr_deployments.gpkg")
 
     lfr_df = load_lfr(in_path)
     lfr_gdf = create_geometry(lfr_df)

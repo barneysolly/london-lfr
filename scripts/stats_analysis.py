@@ -18,7 +18,7 @@ def load_data(data_path: Path) -> gpd.GeoDataFrame:
         gpd.GeoDataFrame: Data ready for analysis
     """
     complete_dataset = gpd.read_file(data_path)
-    complete_gdf = complete_dataset[['LSOA11CD', 'stop_search_count_2025', 'stop_search_count_2023', 'abs_change', 'lfr_count' 'Index of Multiple Deprivation (IMD) Decile', 'geometry']]
+    complete_gdf = complete_dataset[['LSOA11CD', 'stop_search_count_2025', 'stop_search_count_2023', 'abs_difference', 'lfr_count', 'Index of Multiple Deprivation (IMD) Decile', 'geometry']]
 
     return complete_gdf
 
@@ -38,7 +38,7 @@ def lfr_deployments_high_stop_search_lsoas(quantile: float, total_lfr: float, co
 
     top_stop_search = complete_gdf['stop_search_count_2025'].quantile(quantile)
 
-    high_stop_search_lsoas = complete_gdf[complete_gdf['stop_search_count_2025'] >= top_10_stop_search]
+    high_stop_search_lsoas = complete_gdf[complete_gdf['stop_search_count_2025'] >= top_stop_search]
 
     lfr_in_quantile = high_stop_search_lsoas['lfr_count'].sum()
 
@@ -59,9 +59,9 @@ def lfr_deployments_rising_falling(complete_gdf: gpd.GeoDataFrame, total_lfr: fl
         tuple[float]: 3 percentages for lfr deployments in areas of rising stop & search, no change and falling stop & search
     """
 
-    rising_search = complete_gdf[complete_gdf['abs_change'] > 0]
-    no_change = complete_gdf[complete_gdf['abs_change'] == 0]
-    falling_search = complete_gdf[complete_gdf['abs_change'] < 0]
+    rising_search = complete_gdf[complete_gdf['abs_difference'] > 0]
+    no_change = complete_gdf[complete_gdf['abs_difference'] == 0]
+    falling_search = complete_gdf[complete_gdf['abs_difference'] < 0]
 
     lfr_rising = rising_search['lfr_count'].sum()
     lfr_no_change = no_change['lfr_count'].sum()
@@ -118,15 +118,21 @@ def create_dataframe_with_stats(key_stats: dict) -> pd.DataFrame:
     
 
 if __name__ == "__main__":
-    in_path = Path("../data/prcoessed/combined_counts.gpkg")
-    out_path = Path("../outputs/tables/summary_stats.csv")
+    BASE_DIR = Path(__file__).resolve().parents[1]
+
+    PROCESSED = BASE_DIR / "data/processed"
+    OUTPUTS = BASE_DIR / "outputs/tables"
+
+    in_path = PROCESSED / "combined_counts.gpkg"
+    out_path = OUTPUTS / "summary_stats.csv"
 
     complete_dataset = load_data(in_path)
 
     total_lfr = complete_dataset['lfr_count'].sum()
 
-    top_10_stop_search, lfr_in_top_10, pct_in_top_10 = lfr_deployments_high_stop_search_lsoas(0.9, complete_dataset)
-    top_20_stop_search, lfr_in_top_20, pct_in_top_20 = lfr_deployments_high_stop_search_lsoas(0.8, complete_dataset)
+    top_10_stop_search, lfr_in_top_10, pct_in_top_10 = lfr_deployments_high_stop_search_lsoas(0.9, total_lfr, complete_dataset)
+    top_20_stop_search, lfr_in_top_20, pct_in_top_20 = lfr_deployments_high_stop_search_lsoas(0.8, total_lfr, complete_dataset)
+
 
     lfr_rising, lfr_no_change, lfr_falling, pct_in_rising, pct_no_change, pct_falling = lfr_deployments_rising_falling(complete_dataset, total_lfr)
 
