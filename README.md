@@ -22,6 +22,7 @@ The main outputs are:
 - Python (data processing and analysis)
 - QGIS (map creation and styling)
 
+```
 ### Python Libraries
 The Python environment requires the following packages (see `requirements.txt`):
 - pandas
@@ -76,6 +77,7 @@ project-folder/
 ├── README.md
 └── Report - Live Facial Recognition Deployments, London 2025.pdf
 └── Report - Live Facial Recognition Deployments, London 2025.docx
+```
 
 ## Running the Python Scripts (in order)
 
