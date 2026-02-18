@@ -22,7 +22,7 @@ The main outputs are:
 - Python (data processing and analysis)
 - QGIS (map creation and styling)
 
-```
+
 ### Python Libraries
 The Python environment requires the following packages (see `requirements.txt`):
 - pandas
@@ -32,6 +32,7 @@ The Python environment requires the following packages (see `requirements.txt`):
 - pymupdf
 
 ## File Structure
+```
 project-folder/
 │
 ├── data/
